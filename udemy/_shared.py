@@ -89,7 +89,7 @@ class Downloader(object):
 
         file_data = []
         if os.path.isfile(filename):
-            file_data = [i.strip().lower() for i in open(filename) if i]
+            file_data = [i.strip().lower() for i in codecs.open(filename, encoding='utf-8') if i]
 
         try:
             f = codecs.open(filename, 'a', encoding='utf-8', errors='ignore')
@@ -141,7 +141,7 @@ class Downloader(object):
         bytes_to_be_downloaded = 0
         fmode, offset = "wb", 0
         chunksize, bytesdone, t0 = 16384, 0, time.time()
-        headers = {'User-Agent': HEADERS.get('User-Agent')}
+        headers = {'User-Agent': HEADERS.get('User-Agent'), "Accept-Encoding": None}
         if os.path.exists(temp_filepath):
             offset = os.stat(temp_filepath).st_size
 
